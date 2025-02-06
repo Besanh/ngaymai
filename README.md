@@ -12,3 +12,4 @@ Init folder docs
 
 `swag init`
 
+## 2. Create file .env similar to .env_example, then putting appropriate configuration
