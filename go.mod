@@ -2,13 +2,26 @@ module ngaymai
 
 go 1.23.2
 
-require github.com/gookit/slog v0.5.7
+require (
+	github.com/gookit/slog v0.5.7
+	github.com/uptrace/bun v1.2.9
+)
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/puzpuzpuz/xsync/v3 v3.5.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
+	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
+	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
+	go.opentelemetry.io/otel v1.34.0 // indirect
+	go.opentelemetry.io/otel/trace v1.34.0 // indirect
+	golang.org/x/mod v0.22.0 // indirect
+	mellium.im/sasl v0.3.2 // indirect
 )
 
 require (
@@ -53,6 +66,9 @@ require (
 	github.com/swaggo/swag v1.16.4
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
+	github.com/uptrace/bun/dialect/mysqldialect v1.2.9
+	github.com/uptrace/bun/dialect/pgdialect v1.2.9
+	github.com/uptrace/bun/driver/pgdriver v1.2.9
 	github.com/urfave/cli/v2 v2.27.5 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect

@@ -1,6 +1,11 @@
 # NGAYMAI PROBLEM ASSESSMENT
+All rights reserved © AnhLe
+Please contact anhle3532@gmail.com if you want to use AnhLe's source code
 
-## 1. Install library swagger
+## 1. Architecture and entities
+[Architecture](https://app.diagrams.net/#G1GWZHzJ0_Ez5r0NW_qkkRE_Vi-52d-SN4#%7B%22pageId%22%3A%22LIlMXQeiWCyiD9asdB7_%22%7D)
+
+## 2. Install library swagger
 
 `go get -u github.com/swaggo/gin-swagger`
 
@@ -12,4 +17,5 @@ Init folder docs
 
 `swag init`
 
-## 2. Create file .env similar to .env_example, then putting appropriate configuration
+## 3. Create file .env similar to .env_example, then putting appropriate configuration
+##
