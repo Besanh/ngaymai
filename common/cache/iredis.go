@@ -3,7 +3,7 @@ package cache
 import (
 	"context"
 	"fmt"
-	"ngaymai/common/log"
+	"log"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -22,14 +22,9 @@ type RedisClient struct {
 }
 
 type Config struct {
-	Addr         string
-	Password     string
-	DB           int
-	PoolSize     int
-	PoolTimeout  int
-	IdleTimeout  int
-	ReadTimeout  int
-	WriteTimeout int
+	Addr     string
+	Password string
+	DB       int
 }
 
 func NewRedis(config Config) (IRedis, error) {
@@ -48,20 +43,15 @@ func (r *RedisClient) GetClient() *redis.Client {
 
 func (r *RedisClient) Connect() error {
 	Client := redis.NewClient(&redis.Options{
-		Addr:            r.config.Addr,
-		Password:        r.config.Password,
-		DB:              r.config.DB,
-		PoolSize:        r.config.PoolSize,
-		PoolTimeout:     time.Duration(r.config.PoolTimeout) * time.Second,
-		ConnMaxIdleTime: time.Duration(r.config.IdleTimeout) * time.Second,
-		ReadTimeout:     time.Duration(r.config.ReadTimeout) * time.Second,
-		WriteTimeout:    time.Duration(r.config.WriteTimeout) * time.Second,
+		Addr:     r.config.Addr,
+		Password: r.config.Password,
+		DB:       r.config.DB,
 	})
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	str, err := Client.Ping(ctx).Result()
 	if err != nil {
-		log.Error(err)
+		log.Fatal(err)
 		return err
 	}
 	fmt.Println(str)

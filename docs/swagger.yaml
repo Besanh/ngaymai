@@ -1,3 +1,19 @@
+definitions:
+  model.VideoActionRequest:
+    properties:
+      action:
+        default: view
+        enum:
+        - view
+        - like
+        - comment
+        - share
+        type: string
+      video_id:
+        type: integer
+    required:
+    - action
+    type: object
 info:
   contact: {}
 paths:
@@ -5,6 +21,13 @@ paths:
     put:
       consumes:
       - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.VideoActionRequest'
       produces:
       - application/json
       responses:
@@ -13,6 +36,29 @@ paths:
           schema:
             type: string
       summary: put action view, like, comment, share video
+      tags:
+      - video
+  /video/v1/ranking:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Video Ranking
       tags:
       - video
 swagger: "2.0"

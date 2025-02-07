@@ -72,3 +72,14 @@ type (
 		Video *Video `bun:"rel:belongs-to,join:video_id=video_id"`
 	}
 )
+
+type (
+	VideoActionRequest struct {
+		VideoID int64  `json:"video_id"`
+		Action  string `json:"action" binding:"required,oneof=like dislike view" enums:"view,like,comment,share" default:"view"`
+	}
+	VideoRankingRequest struct {
+		Limit  int `json:"limit" default:"10"`
+		Offset int `json:"offset" default:"0"`
+	}
+)

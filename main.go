@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	v1 "ngaymai/api/v1"
 	"ngaymai/common/cache"
 	"ngaymai/common/env"
 	"ngaymai/common/sql"
 	"ngaymai/repository"
+	"ngaymai/service"
 	"time"
 
 	_ "ngaymai/docs"
@@ -44,11 +46,11 @@ func init() {
 
 	sqlClientConfig := sql.SqlConfig{
 		SecretKey: env.GetStringENV("SECRET_KEY", ""),
-		Host:      env.GetStringENV("DB_HOST", ""),
-		Database:  env.GetStringENV("DB_DATABASE", ""),
-		Username:  env.GetStringENV("DB_USERNAME", ""),
-		Password:  env.GetStringENV("DB_PASSWORD", ""),
-		Port:      env.GetIntENV("DB_PORT", 0),
+		Host:      env.GetStringENV("PGSQL_HOST", ""),
+		Database:  env.GetStringENV("PGSQL_DATABASE", ""),
+		Username:  env.GetStringENV("PGSQL_USERNAME", ""),
+		Password:  env.GetStringENV("PGSQL_PASSWORD", ""),
+		Port:      env.GetIntENV("PGSQL_PORT", 0),
 	}
 	repository.DBConn = sql.NewSqlClient(sqlClientConfig)
 
@@ -59,15 +61,25 @@ func init() {
 * author: AnhLe
  */
 func main() {
+	engine := gin.Default()
+	initInfo(engine)
+
+	// Define swagger endpoint
+	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	engine.Run(":" + config.Port)
+}
+
+func initInfo(engine *gin.Engine) {
+	// Service
+	service.NewVideo()
+
+	// Repository
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	repository.InitTables(ctx, repository.DBConn)
 	repository.InitRepositories()
 
-	r := gin.Default()
-
-	// Define swagger endpoint
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	r.Run(":" + config.Port)
+	// Handler
+	v1.NewVideoHandler(engine, service.NewVideo())
 }
