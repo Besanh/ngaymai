@@ -1,4 +1,18 @@
 info:
   contact: {}
-paths: {}
+paths:
+  /video/v1/:video_id:
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: put action view, like, comment, share video
+      tags:
+      - video
 swagger: "2.0"
