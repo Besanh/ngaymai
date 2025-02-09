@@ -18,4 +18,5 @@ Init folder docs
 `swag init`
 
 ## 3. Create file .env similar to .env_example, then putting appropriate configuration
-##
+## 4. Build service use docker
+I have already created a Dockerfile, you can take advantage of this file to build and deploy in docker
