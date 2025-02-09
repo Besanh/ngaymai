@@ -2,13 +2,13 @@ package repository
 
 import (
 	"context"
-	"ngaymai/common/sql"
+	"ngaymai/common/sqlclient"
 	"ngaymai/model"
 )
 
 type (
 	IUser interface {
-		GetUserById(ctx context.Context, db sql.ISqlClientConn, id string) (*model.User, error)
+		GetUserById(ctx context.Context, db sqlclient.ISqlClientConn, id string) (*model.User, error)
 	}
 	User struct{}
 )
@@ -17,7 +17,7 @@ func NewUser() IUser {
 	return &User{}
 }
 
-func (u *User) GetUserById(ctx context.Context, db sql.ISqlClientConn, id string) (*model.User, error) {
+func (u *User) GetUserById(ctx context.Context, db sqlclient.ISqlClientConn, id string) (*model.User, error) {
 	result := new(model.User)
 	query := db.GetDB().NewSelect().Model(&result).
 		Where("id = ?", id)

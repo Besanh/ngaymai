@@ -5,7 +5,7 @@ import (
 	v1 "ngaymai/api/v1"
 	"ngaymai/common/cache"
 	"ngaymai/common/env"
-	"ngaymai/common/sql"
+	"ngaymai/common/sqlclient"
 	"ngaymai/repository"
 	"ngaymai/service"
 	"time"
@@ -44,7 +44,7 @@ func init() {
 		panic(err)
 	}
 
-	sqlClientConfig := sql.SqlConfig{
+	sqlClientConfig := sqlclient.SqlConfig{
 		SecretKey: env.GetStringENV("SECRET_KEY", ""),
 		Host:      env.GetStringENV("PGSQL_HOST", ""),
 		Database:  env.GetStringENV("PGSQL_DATABASE", ""),
@@ -52,7 +52,7 @@ func init() {
 		Password:  env.GetStringENV("PGSQL_PASSWORD", ""),
 		Port:      env.GetIntENV("PGSQL_PORT", 0),
 	}
-	repository.DBConn = sql.NewSqlClient(sqlClientConfig)
+	repository.DBConn = sqlclient.NewSqlClient(sqlClientConfig)
 
 	config = cfg
 }

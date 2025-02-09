@@ -3,13 +3,13 @@ package repository
 import (
 	"context"
 	"log"
-	"ngaymai/common/sql"
+	"ngaymai/common/sqlclient"
 	"ngaymai/model"
 )
 
-var DBConn sql.ISqlClientConn
+var DBConn sqlclient.ISqlClientConn
 
-func CreateTable(ctx context.Context, db sql.ISqlClientConn, entity any) (err error) {
+func CreateTable(ctx context.Context, db sqlclient.ISqlClientConn, entity any) (err error) {
 	_, err = db.GetDB().NewCreateTable().Model(entity).
 		IfNotExists().
 		Exec(ctx)
@@ -20,7 +20,7 @@ func InitRepositories() {
 
 }
 
-func InitTables(ctx context.Context, dbConn sql.ISqlClientConn) {
+func InitTables(ctx context.Context, dbConn sqlclient.ISqlClientConn) {
 	if err := CreateTable(ctx, dbConn, (*model.User)(nil)); err != nil {
 		log.Fatal(err)
 	}
