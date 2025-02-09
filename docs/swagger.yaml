@@ -3,14 +3,13 @@ definitions:
     properties:
       action:
         default: view
+        description: VideoID int64  `json:"video_id"`
         enum:
         - view
         - like
         - comment
         - share
         type: string
-      video_id:
-        type: integer
     required:
     - action
     type: object

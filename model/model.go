@@ -6,6 +6,7 @@ import (
 	"github.com/uptrace/bun"
 )
 
+// Define type for database
 type (
 	User struct {
 		bun.BaseModel `bun:"table:users"`
@@ -73,13 +74,19 @@ type (
 	}
 )
 
+// Define type for request and response apis
 type (
 	VideoActionRequest struct {
-		VideoID int64  `json:"video_id"`
-		Action  string `json:"action" binding:"required,oneof=like dislike view" enums:"view,like,comment,share" default:"view"`
+		// VideoID int64  `json:"video_id"`
+		Action string `json:"action" binding:"required,oneof=like dislike view" enums:"view,like,comment,share" default:"view"`
 	}
+
 	VideoRankingRequest struct {
 		Limit  int `json:"limit" default:"10"`
 		Offset int `json:"offset" default:"0"`
+	}
+	VideoRankingResponse struct {
+		VideoID int64   `json:"video_id"`
+		Score   float64 `json:"score"`
 	}
 )

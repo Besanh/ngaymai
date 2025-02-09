@@ -35,6 +35,7 @@ func NewVideoHandler(e *gin.Engine, videoService service.IVideo) {
 // @Router /video/v1/:video_id [put]
 // @Param data body model.VideoActionRequest true "data"
 func (h *VideoHandler) PutVideoRanking(c *gin.Context) {
+	// Define model to easy expand
 	jsonBody := model.VideoActionRequest{}
 	if err := c.ShouldBindJSON(&jsonBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

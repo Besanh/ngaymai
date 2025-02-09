@@ -93,6 +93,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "action": {
+                    "description": "VideoID int64  ` + "`" + `json:\"video_id\"` + "`" + `",
                     "type": "string",
                     "default": "view",
                     "enum": [
@@ -101,9 +102,6 @@ const docTemplate = `{
                         "comment",
                         "share"
                     ]
-                },
-                "video_id": {
-                    "type": "integer"
                 }
             }
         }

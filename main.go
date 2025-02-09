@@ -72,7 +72,7 @@ func main() {
 
 func initInfo(engine *gin.Engine) {
 	// Service
-	service.NewVideo()
+	service := service.NewVideo(cache.RCache, repository.DBConn)
 
 	// Repository
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -81,5 +81,5 @@ func initInfo(engine *gin.Engine) {
 	repository.InitRepositories()
 
 	// Handler
-	v1.NewVideoHandler(engine, service.NewVideo())
+	v1.NewVideoHandler(engine, service)
 }

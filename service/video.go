@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"ngaymai/common/cache"
+	"ngaymai/common/sqlclient"
 	"ngaymai/model"
 	"ngaymai/repository"
 )
@@ -14,13 +15,24 @@ type (
 		PutVideoRanking(ctx context.Context, id string, jsonBody model.VideoActionRequest) (code int, result any)
 		GetVideoRanking(ctx context.Context, request model.VideoRankingRequest) (code int, result any)
 	}
-	Video struct{}
+	Video struct {
+		redisCache cache.IRedisCache
+		dbClient   sqlclient.ISqlClientConn
+	}
 )
 
-func NewVideo() IVideo {
-	return &Video{}
+func NewVideo(redisCache cache.IRedisCache, dbClient sqlclient.ISqlClientConn) *Video {
+	return &Video{
+		redisCache: redisCache,
+		dbClient:   dbClient,
+	}
 }
 
+/*
+ * Update video ranking with specified action
+ * Use transaction to update both redis and database
+ * @return http code and result(json)
+ */
 func (s *Video) PutVideoRanking(ctx context.Context, id string, jsonBody model.VideoActionRequest) (code int, result any) {
 	var increment float64
 	switch jsonBody.Action {
@@ -93,7 +105,12 @@ func (s *Video) PutVideoRanking(ctx context.Context, id string, jsonBody model.V
 	}
 }
 
+/*
+ * Get video ranking, prioritize from Redis if available
+ * @return http code and result(json)
+ */
 func (s *Video) GetVideoRanking(ctx context.Context, request model.VideoRankingRequest) (code int, result any) {
+	// Get from Redis
 	topVideos, err := cache.RCache.ZRevRangeWithScores("video_ranking", int64(request.Limit), int64(request.Offset))
 	if err != nil {
 		log.Fatalf("Failed to get top videos: %v", err)
