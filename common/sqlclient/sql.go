@@ -1,4 +1,4 @@
-package sql
+package sqlclient
 
 import (
 	"crypto/aes"
